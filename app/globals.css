@@ -34,16 +34,55 @@ body {
   line-height: 1.5;
 }
 
-.tagline {
+.announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
   margin: 0 0 12px;
   padding: 12px 16px;
   border-radius: 16px;
-  background: linear-gradient(120deg, rgba(37, 99, 255, 0.08), rgba(14, 165, 233, 0.12));
+  background: linear-gradient(120deg, rgba(37, 99, 255, 0.12), rgba(14, 165, 233, 0.16));
   color: #0f172a;
   font-weight: 700;
   letter-spacing: -0.01em;
   box-shadow: var(--shadow);
   text-align: center;
+}
+
+.announcement-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 255, 0.12);
+  color: #2563ff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  border: 1px solid rgba(37, 99, 255, 0.15);
+}
+
+.announcement-copy {
+  color: #0b1220;
+  font-weight: 700;
+}
+
+.announcement-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563ff, #38bdf8);
+  color: #fff;
+  font-weight: 800;
+  border: none;
+  box-shadow: 0 10px 20px rgba(37, 99, 255, 0.18);
+  cursor: pointer;
 }
 
 a {

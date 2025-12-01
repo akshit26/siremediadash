@@ -172,7 +172,14 @@ export default function HomePage() {
 
   return (
     <div className="page-shell">
-      <div className="tagline">Powered by Sire Media — Exclusive Creator Network + Intelligent Campaign Management.</div>
+      <div className="announcement-bar" role="banner">
+        <span className="announcement-pill">Limited offer</span>
+        <span className="announcement-copy">Enroll for a free trial now and unlock your next creator sprint.</span>
+        <button className="announcement-cta" type="button">
+          Start free trial
+          <span aria-hidden>↗</span>
+        </button>
+      </div>
       <header className="top-bar">
         <div className="logo">
           <div className="logo-mark">

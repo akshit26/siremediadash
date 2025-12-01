@@ -1,0 +1,59 @@
+.section-two {
+  background: radial-gradient(circle at 20% 20%, rgba(82, 142, 255, 0.08), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(132, 181, 255, 0.08), transparent 30%),
+    linear-gradient(180deg, rgba(10, 23, 46, 0.8) 0%, rgba(6, 11, 24, 0.92) 100%);
+}
+
+.flashcard-scroll {
+  scroll-snap-type: y mandatory;
+  scroll-padding: 32px;
+}
+
+.flashcard-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.flashcard-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+.flashcard-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(58, 124, 255, 0.7), rgba(109, 143, 255, 0.9));
+  border-radius: 999px;
+}
+
+.flash-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(76, 141, 255, 0.12), rgba(146, 199, 255, 0.05));
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(130deg, rgba(96, 165, 250, 0.6), rgba(129, 140, 248, 0.6));
+  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.flash-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.55), rgba(82, 145, 255, 0.06) 60%, transparent 70%);
+  mix-blend-mode: screen;
+  z-index: 1;
+}

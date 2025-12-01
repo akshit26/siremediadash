@@ -34,6 +34,91 @@ body {
   line-height: 1.5;
 }
 
+.command-scroll {
+  position: relative;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.command-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.command-scroll::before,
+.command-scroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 52px;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.command-scroll::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.8), transparent);
+}
+
+.command-scroll::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(15, 23, 42, 0.8), transparent);
+}
+
+.command-card {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(37, 99, 255, 0.32)),
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.18), transparent 40%),
+    radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.14), transparent 36%);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.5), 0 10px 30px rgba(37, 99, 255, 0.25);
+}
+
+.command-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 120deg,
+    rgba(56, 189, 248, 0.4),
+    rgba(14, 165, 233, 0.18),
+    rgba(59, 130, 246, 0.42),
+    rgba(14, 165, 233, 0.3),
+    rgba(56, 189, 248, 0.4)
+  );
+  opacity: 0.45;
+  filter: blur(24px);
+  z-index: -1;
+}
+
+.command-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0));
+  z-index: -1;
+}
+
+@media (max-width: 640px) {
+  .command-scroll {
+    padding-inline: 4px;
+  }
+
+  .command-scroll::before,
+  .command-scroll::after {
+    width: 36px;
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.86), transparent);
+  }
+
+  .command-card {
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.45), 0 6px 20px rgba(59, 130, 246, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
 .announcement-bar {
   display: flex;
   align-items: center;

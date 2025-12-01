@@ -261,7 +261,17 @@ export default function HomePage() {
                   <span />
                   <span />
                 </div>
-                <span className="pill">See Your Campaign Flow</span>
+                <button
+                  type="button"
+                  className="pill card-cta"
+                  onClick={() => {
+                    setActiveStep('deliverables');
+                    videoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
+                >
+                  <span>See Your Campaign Flow</span>
+                  <span aria-hidden>↗</span>
+                </button>
               </div>
               <div className="card-body">
                 <div

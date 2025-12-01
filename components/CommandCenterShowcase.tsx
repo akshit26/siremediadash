@@ -62,7 +62,7 @@ export default function CommandCenterShowcase() {
                     Explore the exact features from our previous workspace—approvals, deliverables, timelines, and payouts—now remixed into a new interactive canvas built directly into the page.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-blue-50/80">
-                    <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Tap to flip details</span>
+                    <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Tap to reveal details</span>
                     <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Scroll to stack or spread</span>
                     <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Mobile-friendly layout</span>
                 </div>
@@ -81,16 +81,17 @@ export default function CommandCenterShowcase() {
                         const isFlipped = card.id === flippedId;
                         const offset = index - centerIndex;
                         const absOffset = Math.abs(offset);
+                        const focusScale = isActive ? 1.04 : 1;
 
                         const deckTransform = stacked
                             ? `
                                 translate3d(${-offset * (10 + absOffset * 3)}px, 0, ${-absOffset * 30}px)
                                 rotateZ(${-offset * 3}deg)
-                                rotateY(${isFlipped ? 180 : 0}deg)
+                                scale(${focusScale})
                             `
                             : `
                                 translate3d(0, 0, 0)
-                                rotateY(${isFlipped ? 180 : 0}deg)
+                                scale(${isActive ? 1.02 : 1})
                             `;
 
                         return (
@@ -158,7 +159,7 @@ export default function CommandCenterShowcase() {
                                             <span className="h-2 w-2 rounded-full bg-emerald-400" />
                                             {stacked ? 'Stacked view' : 'Spread view'}
                                         </span>
-                                        <span className="opacity-80">Tap to flip</span>
+                                        <span className="opacity-80">Tap to reveal</span>
                                     </div>
                                 </button>
                             </div>

@@ -11,6 +11,7 @@ export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(flowSteps[0].id);
   const [searchMessage, setSearchMessage] = useState('Private network search ready.');
@@ -25,6 +26,17 @@ export default function HomePage() {
       setPlaceholderIndex((prev) => (prev + 1) % searchPlaceholders.length);
     }, 3200);
     return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setNavOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -55,6 +67,7 @@ export default function HomePage() {
   }, []);
 
   const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
@@ -129,13 +142,30 @@ export default function HomePage() {
             <span className="logo-tag">Exclusive Creator Network + Intelligent Campaign Management</span>
           </div>
         </div>
-        <nav className="nav-links">
-          <a href="#home" className="active">
+        <button
+          type="button"
+          className={`mobile-nav-toggle ${navOpen ? 'active' : ''}`}
+          aria-expanded={navOpen}
+          aria-label="Toggle navigation menu"
+          onClick={() => setNavOpen((prev) => !prev)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav className={`nav-links ${navOpen ? 'open' : ''}`}>
+          <a href="#home" className="active" onClick={() => setNavOpen(false)}>
             Home
           </a>
-          <a href="#messages">Messages</a>
-          <a href="#campaigns">Campaigns</a>
-          <a href="#analytics">Analytics</a>
+          <a href="#messages" onClick={() => setNavOpen(false)}>
+            Messages
+          </a>
+          <a href="#campaigns" onClick={() => setNavOpen(false)}>
+            Campaigns
+          </a>
+          <a href="#analytics" onClick={() => setNavOpen(false)}>
+            Analytics
+          </a>
           <span className="client-pill">Client Workspace</span>
         </nav>
         <div className="actions">

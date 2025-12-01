@@ -1,0 +1,71 @@
+[
+  {
+    "id": "approvals",
+    "title": "1-Click Approvals",
+    "badge": "Premium Workflow",
+    "subtitle": "No more WhatsApp confusion",
+    "summary": "Clients approve drafts in one click; all comments and revision history are timestamped and stored.",
+    "merits": [
+      "Instant client approval links",
+      "Full revision history",
+      "Timestamps and approver identity"
+    ],
+    "demerits": [
+      "Requires client onboarding",
+      "Not suitable for informal approvals"
+    ],
+    "whyUs": [
+      "We enforce approval timestamps",
+      "We keep revision links with deliverables",
+      "We integrate approvals into invoices"
+    ],
+    "example": "Client can approve a reel draft and leave exact time-coded notes.",
+    "ctaLabel": "Preview Approval Flow"
+  },
+  {
+    "id": "deliverables",
+    "title": "Deliverables Tracker",
+    "badge": "Operations",
+    "subtitle": "Everything organized in one place",
+    "summary": "Track every creator deliverable: status, upload, review, changes, and post date.",
+    "merits": [
+      "Clear status (pending/submitted/approved)",
+      "Auto reminders",
+      "File storage linked to deliverable"
+    ],
+    "demerits": [
+      "Requires creators to upload on time",
+      "Change logs can be heavy for large campaigns"
+    ],
+    "whyUs": [
+      "We own creator compliance processes",
+      "We auto-flag delayed uploads",
+      "We link deliverables to payments & invoices"
+    ],
+    "example": "A creator uploads the UGC; ops marks ‘submitted’ and client gets an approval link.",
+    "ctaLabel": "Open Deliverables"
+  },
+  {
+    "id": "timelines",
+    "title": "Creator Timelines",
+    "badge": "Planning",
+    "subtitle": "Your campaign on one lane",
+    "summary": "A visual timeline for each creator with milestones and auto-generated posting schedules.",
+    "merits": [
+      "Easy conflict detection",
+      "Auto-created content calendars",
+      "Per-creator lanes"
+    ],
+    "demerits": [
+      "Requires initial setup",
+      "Manual overrides possible"
+    ],
+    "whyUs": [
+      "We create timeline templates for each category",
+      "We automate reminders for creators",
+      "We provide conflict-resolution suggestions"
+    ],
+    "example": "Timeline shows creator A shoot on 24 Nov, submit 26 Nov, post 29 Nov.",
+    "ctaLabel": "View Timelines"
+  }
+]

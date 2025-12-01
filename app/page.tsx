@@ -142,9 +142,9 @@ function CommandCenterShowcase() {
         }`}
       >
         <div
-          className={`flex w-full gap-5 transition-all duration-500 ${
-            stacked ? 'relative h-full items-center justify-center' : 'overflow-x-auto pb-8'
-          }`}
+          className={`command-scroll flex w-full gap-5 transition-all duration-500 ${
+            stacked ? 'relative h-full items-center justify-center' : 'overflow-x-auto pb-10'
+          } ${stacked ? '' : 'snap-x snap-mandatory'}`}
         >
           {cards.map((card, index) => {
             const offset = index - centerIndex;
@@ -174,7 +174,7 @@ function CommandCenterShowcase() {
                     setActiveId(card.id);
                     setFlippedId(isFlipped ? null : card.id);
                   }}
-                  className={`group relative block h-full overflow-hidden rounded-2xl border border-white/15 bg-slate-900/70 p-4 text-left shadow-2xl shadow-black/20 backdrop-blur ${
+                  className={`command-card group relative block h-full overflow-hidden rounded-2xl border border-white/15 bg-slate-900/70 p-4 text-left shadow-2xl shadow-black/20 backdrop-blur ${
                     isActive ? 'ring-2 ring-blue-400/70' : 'ring-1 ring-white/5'
                   } transition`}
                   aria-pressed={isFlipped}
@@ -231,14 +231,6 @@ function CommandCenterShowcase() {
               </div>
             );
           })}
-        </div>
-        <div className="mt-10 flex flex-col items-center justify-center gap-3 text-center text-sm text-blue-100/80">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">{stacked ? 'Scroll down to spread' : 'Scroll up to stack'}</span>
-            <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Hold & drag on desktop</span>
-            <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Swipe on mobile</span>
-          </div>
-          <p className="text-xs text-blue-100/70">Live accessibility hint: cards keep the same content as our previous section, fully restyled.</p>
         </div>
       </div>
     </section>

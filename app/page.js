@@ -9,13 +9,60 @@ const heroStats = [
   { key: 'categories', label: 'Categories', value: 1845 },
 ];
 
+const searchPlaceholders = [
+  'Search affiliated creators…',
+  'Search your campaign creators…',
+  'Search Sire Media verified creators…',
+  'Search inside your campaign…',
+  'Search creators assigned to your project…',
+];
+
 const creatorCards = [
-  { id: 1, name: 'Manoj Vandre', role: 'Fashion Creator', audience: '787K', location: 'India', adPrice: '₹ 95K', videoPrice: '₹ 50K', color: 'pink' },
-  { id: 2, name: 'Moana Patel', role: 'Fashion Creator', audience: '787K', location: 'India', adPrice: '₹ 95K', videoPrice: '₹ 50K', color: 'orange' },
-  { id: 3, name: 'Asmeen Lote', role: 'Fashion Creator', audience: '787K', location: 'India', adPrice: '₹ 95K', videoPrice: '₹ 50K', color: 'blue' },
+  {
+    id: 1,
+    name: 'Manoj Vandre',
+    role: 'Fashion Creator',
+    audience: '787K',
+    location: 'India',
+    adPrice: '₹ 95K',
+    videoPrice: '₹ 50K',
+    color: 'pink',
+    image:
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=360&q=80',
+  },
+  {
+    id: 2,
+    name: 'Moana Patel',
+    role: 'Beauty & Lifestyle',
+    audience: '622K',
+    location: 'India',
+    adPrice: '₹ 82K',
+    videoPrice: '₹ 44K',
+    color: 'orange',
+    image:
+      'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=360&q=80',
+  },
+  {
+    id: 3,
+    name: 'Asmeen Lote',
+    role: 'Tech & Reviews',
+    audience: '910K',
+    location: 'India',
+    adPrice: '₹ 115K',
+    videoPrice: '₹ 60K',
+    color: 'blue',
+    image:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=360&q=80',
+  },
 ];
 
 const categories = ['Fashion', 'Tech', 'Lifestyle', 'Gaming'];
+
+const flowSteps = [
+  { id: 'deliverables', title: 'Deliverables', detail: 'Shot lists, posting cadence, and approvals in one lane.' },
+  { id: 'approvals', title: 'Approvals', detail: 'Timed checkpoints with creator nudges and notes.' },
+  { id: 'timeline', title: 'Timeline', detail: 'Gantt-like view for reels, stories, and giveaways.' },
+];
 
 function useAnimatedCounts(targets, duration = 1800) {
   const [counts, setCounts] = useState(() =>
@@ -45,6 +92,13 @@ function useAnimatedCounts(targets, duration = 1800) {
 
 export default function HomePage() {
   const cardRef = useRef(null);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [pinned, setPinned] = useState(new Set());
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(22);
+  const [activeStep, setActiveStep] = useState(flowSteps[0].id);
+  const [searchMessage, setSearchMessage] = useState('Private network search ready.');
   const targetCounts = useMemo(
     () => ({
       influencers: 432452,
@@ -55,6 +109,21 @@ export default function HomePage() {
     []
   );
   const counts = useAnimatedCounts(targetCounts);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % searchPlaceholders.length);
+    }, 3200);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    const id = setInterval(() => {
+      setProgress((prev) => (prev >= 100 ? 6 : prev + 5));
+    }, 450);
+    return () => clearInterval(id);
+  }, [isPlaying]);
 
   const handleMouseMove = (event) => {
     const card = cardRef.current;
@@ -75,10 +144,23 @@ export default function HomePage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setSearchMessage('Searching your exclusive roster...');
+    setTimeout(() => setSearchMessage('Private network search ready.'), 1300);
   };
+
+  const togglePin = (id) => {
+    setPinned((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const togglePlay = () => setIsPlaying((prev) => !prev);
 
   return (
     <div className="page-shell">
+      <div className="tagline">Powered by Sire Media — Exclusive Creator Network + Intelligent Campaign Management.</div>
       <header className="top-bar">
         <div className="logo">
           <div className="logo-mark">
@@ -114,24 +196,37 @@ export default function HomePage() {
           <div className="hero-content">
             <div className="hero-text">
               <h1>
-                Find
+                Your Personal
                 <br />
-                <span className="highlight">Influencers</span>
+                <span className="highlight">Influencer Campaign</span>
                 <br />
-                to collaborate with
+                Workspace.
               </h1>
+              <p className="lead">
+                Work with Sire Media’s verified creators and manage your entire campaign—from ideation to
+                execution—through a streamlined and intelligent dashboard.
+              </p>
               <form className="search-form" onSubmit={handleSubmit}>
                 <label className="sr-only" htmlFor="search">
                   Search influencers
                 </label>
-                <input id="search" type="search" placeholder="Search influencer..." />
+                <input id="search" type="search" placeholder={searchPlaceholders[placeholderIndex]} />
                 <div className="filter" aria-hidden>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M3 6h18v2l-7 6v4l-4 2v-6L3 8z" />
                   </svg>
                 </div>
-                <button type="submit">Search</button>
+                <button type="submit">Get Started</button>
               </form>
+              <div className="search-message">{searchMessage}</div>
+              <div className="hero-actions">
+                <button className="primary-cta" onClick={() => setActiveStep('deliverables')}>
+                  Build campaign workspace
+                </button>
+                <button className="ghost-cta" onClick={togglePlay}>
+                  {isPlaying ? 'Pause walkthrough' : 'Preview dashboard'}
+                </button>
+              </div>
               <div className="hero-stats">
                 {heroStats.map((stat) => (
                   <div className="stat" key={stat.key}>
@@ -153,17 +248,34 @@ export default function HomePage() {
                   <span />
                   <span />
                 </div>
-                <span className="pill">See how it&apos;s done</span>
+                <span className="pill">See Your Campaign Flow</span>
               </div>
               <div className="card-body">
-                <div className="avatars">
-                  <div className="avatar a1" />
-                  <div className="avatar a2" />
-                  <div className="avatar a3" />
-                  <div className="avatar a4" />
-                  <div className="avatar a5" />
+                <div className="video-box" onClick={togglePlay} role="button" tabIndex={0}>
+                  <div className={`play-toggle ${isPlaying ? 'pause' : ''}`}>
+                    {isPlaying ? <span>❚❚</span> : <span>▶</span>}
+                  </div>
+                  <div className="video-copy">
+                    <p className="eyebrow">Walkthrough</p>
+                    <h3>See Your Campaign Flow</h3>
+                    <p className="subline">A quick walkthrough of deliverables, approvals, and creator timelines.</p>
+                  </div>
+                  <div className="progress">
+                    <span style={{ width: `${progress}%` }} />
+                  </div>
                 </div>
-                <div className="cta">Start scouting</div>
+                <div className="timeline">
+                  {flowSteps.map((step) => (
+                    <button
+                      key={step.id}
+                      className={`chip ${activeStep === step.id ? 'active' : ''}`}
+                      onClick={() => setActiveStep(step.id)}
+                    >
+                      {step.title}
+                    </button>
+                  ))}
+                </div>
+                <div className="timeline-detail">{flowSteps.find((s) => s.id === activeStep)?.detail}</div>
               </div>
             </div>
           </div>
@@ -171,7 +283,11 @@ export default function HomePage() {
 
         <section className="filters" id="campaigns">
           {categories.map((category, index) => (
-            <button key={category} className={`pill ${index === 0 ? 'active' : ''}`}>
+            <button
+              key={category}
+              className={`pill ${selectedCategory === category ? 'active' : ''}`}
+              onClick={() => setSelectedCategory(category)}
+            >
               {category}
             </button>
           ))}
@@ -181,7 +297,9 @@ export default function HomePage() {
           {creatorCards.slice(0, 2).map((card) => (
             <article className="profile-card" key={card.id}>
               <div className="profile">
-                <div className={`img-wrap ${card.color}`} />
+                <div className={`img-wrap ${card.color}`}>
+                  <Image src={card.image} alt={card.name} width={72} height={72} />
+                </div>
                 <div className="meta">
                   <h3>{card.name}</h3>
                   <p>{card.role}</p>
@@ -192,8 +310,10 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="cta-row">
-                <button className="ghost">Download Kit</button>
-                <button className="primary">Send Message</button>
+                <button className="ghost" onClick={() => togglePin(card.id)}>
+                  {pinned.has(card.id) ? 'Pinned' : 'Pin to board'}
+                </button>
+                <button className="primary">Open brief</button>
               </div>
               <div className="row">
                 <span>Advertising Price</span>
@@ -224,7 +344,9 @@ export default function HomePage() {
           {creatorCards.slice(2).map((card) => (
             <article className="profile-card" key={card.id}>
               <div className="profile">
-                <div className={`img-wrap ${card.color}`} />
+                <div className={`img-wrap ${card.color}`}>
+                  <Image src={card.image} alt={card.name} width={72} height={72} />
+                </div>
                 <div className="meta">
                   <h3>{card.name}</h3>
                   <p>{card.role}</p>
@@ -235,8 +357,10 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="cta-row">
-                <button className="ghost">Download Kit</button>
-                <button className="primary">Send Message</button>
+                <button className="ghost" onClick={() => togglePin(card.id)}>
+                  {pinned.has(card.id) ? 'Pinned' : 'Pin to board'}
+                </button>
+                <button className="primary">Open brief</button>
               </div>
               <div className="row">
                 <span>Advertising Price</span>

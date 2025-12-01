@@ -1,4 +1,5 @@
 import './globals.css';
+import '../styles/flashcards.css';
 import { Manrope } from 'next/font/google';
 
 const manrope = Manrope({ subsets: ['latin'], weight: ['400', '600', '700', '800'] });

@@ -17,47 +17,6 @@ const searchPlaceholders = [
   'Search creators assigned to your project…',
 ];
 
-const creatorCards = [
-  {
-    id: 1,
-    name: 'Manoj Vandre',
-    role: 'Fashion Creator',
-    audience: '787K',
-    location: 'India',
-    adPrice: '₹ 95K',
-    videoPrice: '₹ 50K',
-    color: 'pink',
-    image:
-      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=360&q=80',
-  },
-  {
-    id: 2,
-    name: 'Moana Patel',
-    role: 'Beauty & Lifestyle',
-    audience: '622K',
-    location: 'India',
-    adPrice: '₹ 82K',
-    videoPrice: '₹ 44K',
-    color: 'orange',
-    image:
-      'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=360&q=80',
-  },
-  {
-    id: 3,
-    name: 'Asmeen Lote',
-    role: 'Tech & Reviews',
-    audience: '910K',
-    location: 'India',
-    adPrice: '₹ 115K',
-    videoPrice: '₹ 60K',
-    color: 'blue',
-    image:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=360&q=80',
-  },
-];
-
-const categories = ['Fashion', 'Tech', 'Lifestyle', 'Gaming'];
-
 const flowSteps = [
   { id: 'deliverables', title: 'Deliverables', detail: 'Shot lists, posting cadence, and approvals in one lane.' },
   { id: 'approvals', title: 'Approvals', detail: 'Timed checkpoints with creator nudges and notes.' },
@@ -93,19 +52,12 @@ function useAnimatedCounts(targets, duration = 1800) {
 export default function HomePage() {
   const cardRef = useRef(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [pinned, setPinned] = useState(new Set());
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(22);
   const [activeStep, setActiveStep] = useState(flowSteps[0].id);
   const [searchMessage, setSearchMessage] = useState('Private network search ready.');
   const targetCounts = useMemo(
-    () => ({
-      influencers: 432452,
-      brands: 94002,
-      categories: 1845,
-      showcase: 232452,
-    }),
+    () => Object.fromEntries(heroStats.map(({ key, value }) => [key, value])),
     []
   );
   const counts = useAnimatedCounts(targetCounts);
@@ -146,14 +98,6 @@ export default function HomePage() {
     event.preventDefault();
     setSearchMessage('Searching your exclusive roster...');
     setTimeout(() => setSearchMessage('Private network search ready.'), 1300);
-  };
-
-  const togglePin = (id) => {
-    setPinned((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
   };
 
   const togglePlay = () => setIsPlaying((prev) => !prev);
@@ -281,98 +225,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="filters" id="campaigns">
-          {categories.map((category, index) => (
-            <button
-              key={category}
-              className={`pill ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </section>
-
-        <section className="cards-grid" id="analytics">
-          {creatorCards.slice(0, 2).map((card) => (
-            <article className="profile-card" key={card.id}>
-              <div className="profile">
-                <div className={`img-wrap ${card.color}`}>
-                  <Image src={card.image} alt={card.name} width={72} height={72} />
-                </div>
-                <div className="meta">
-                  <h3>{card.name}</h3>
-                  <p>{card.role}</p>
-                  <div className="numbers">
-                    <span>{card.audience}</span>
-                    <span>{card.location}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="cta-row">
-                <button className="ghost" onClick={() => togglePin(card.id)}>
-                  {pinned.has(card.id) ? 'Pinned' : 'Pin to board'}
-                </button>
-                <button className="primary">Open brief</button>
-              </div>
-              <div className="row">
-                <span>Advertising Price</span>
-                <strong>{card.adPrice}</strong>
-              </div>
-              <div className="row">
-                <span>Per Video</span>
-                <strong>{card.videoPrice}</strong>
-              </div>
-            </article>
-          ))}
-
-          <article className="profile-card large">
-            <div className="badge">Show All</div>
-            <div className="big-count">
-              <div className="number">{counts.showcase?.toLocaleString()}</div>
-              <div className="sub">Influencers</div>
-            </div>
-            <div className="floating-icons">
-              <span className="spark" />
-              <span className="spark" />
-              <div className="emoji">👑</div>
-              <div className="emoji">⭐</div>
-            </div>
-            <button className="primary stretch">Explore more</button>
-          </article>
-
-          {creatorCards.slice(2).map((card) => (
-            <article className="profile-card" key={card.id}>
-              <div className="profile">
-                <div className={`img-wrap ${card.color}`}>
-                  <Image src={card.image} alt={card.name} width={72} height={72} />
-                </div>
-                <div className="meta">
-                  <h3>{card.name}</h3>
-                  <p>{card.role}</p>
-                  <div className="numbers">
-                    <span>{card.audience}</span>
-                    <span>{card.location}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="cta-row">
-                <button className="ghost" onClick={() => togglePin(card.id)}>
-                  {pinned.has(card.id) ? 'Pinned' : 'Pin to board'}
-                </button>
-                <button className="primary">Open brief</button>
-              </div>
-              <div className="row">
-                <span>Advertising Price</span>
-                <strong>{card.adPrice}</strong>
-              </div>
-              <div className="row">
-                <span>Per Video</span>
-                <strong>{card.videoPrice}</strong>
-              </div>
-            </article>
-          ))}
-        </section>
       </main>
     </div>
   );

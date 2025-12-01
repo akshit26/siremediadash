@@ -2,11 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import cardsData from '../data/section2Cards.json';
-import FlashCard, { CardState, FlashCardData } from './FlashCard';
+import FlashCard, { type CardState, type FlashCardData } from './FlashCard';
 
 export default function FlashCardDeck() {
   const cards = useMemo<FlashCardData[]>(() => cardsData, []);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [liveMessage, setLiveMessage] = useState('');
   const containerRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -27,7 +28,7 @@ export default function FlashCardDeck() {
           }
         }
       },
-      { root: container, threshold: [0.35, 0.5, 0.65], rootMargin: '-35% 0px -35% 0px' }
+      { root: container, threshold: [0.35, 0.5, 0.65], rootMargin: '-40% 0px -40% 0px' }
     );
 
     itemRefs.current.forEach((node) => {
@@ -43,6 +44,14 @@ export default function FlashCardDeck() {
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
+
+  useEffect(() => {
+    const card = cards[activeIndex];
+    if (!card) return;
+    setLiveMessage(
+      `Now showing: ${card.title} — ${card.merits.length} merits, ${card.demerits.length} demerits, ${card.whyUs.length} why-us points.`
+    );
+  }, [activeIndex, cards]);
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -74,25 +83,30 @@ export default function FlashCardDeck() {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="flashcard-scroll mx-auto mt-12 flex max-h-[78vh] w-full max-w-4xl flex-col gap-6 overflow-y-auto px-2 pb-4 pt-2 snap-y snap-mandatory"
-      tabIndex={0}
-      role="region"
-      aria-label="Campaign Management flash cards"
-    >
-      {cards.map((card, index) => (
-        <div
-          key={card.id}
-          ref={(node) => {
-            itemRefs.current[index] = node;
-          }}
-          data-index={index}
-          className="snap-center"
-        >
-          <FlashCard card={card} state={getState(index)} onFocus={() => setActiveIndex(index)} />
-        </div>
-      ))}
+    <div className="card-rail-wrapper">
+      <div
+        ref={containerRef}
+        className="flashcard-scroll card-rail mx-auto mt-12 flex max-h-[78vh] w-full max-w-4xl flex-col gap-8 overflow-y-auto px-2 pb-6 pt-2 snap-y snap-mandatory"
+        tabIndex={0}
+        role="region"
+        aria-label="Campaign Management flash cards"
+      >
+        {cards.map((card, index) => (
+          <div
+            key={card.id}
+            ref={(node) => {
+              itemRefs.current[index] = node;
+            }}
+            data-index={index}
+            className="snap-center"
+          >
+            <FlashCard card={card} state={getState(index)} onFocus={() => setActiveIndex(index)} />
+          </div>
+        ))}
+      </div>
+      <div className="sr-only" aria-live="polite">
+        {liveMessage}
+      </div>
     </div>
   );
 }

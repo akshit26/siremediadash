@@ -2,7 +2,10 @@ import TradingDeck from './TradingDeck';
 
 export default function Section2() {
   return (
-    <section id="section-trading" className="section-two relative z-0 pt-16 pb-24 sm:pt-32 sm:pb-48 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 mx-auto max-w-[1200px] mt-8 rounded-[32px] overflow-hidden border border-white/10 shadow-2xl shadow-sky-900/20">
+    <section
+      id="section-trading"
+      className="section-two relative z-0 w-full px-4 sm:px-8 pt-16 pb-24 sm:pt-32 sm:pb-48 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 mx-auto max-w-[1400px] mt-8 rounded-[32px] overflow-hidden border border-white/10 shadow-2xl shadow-sky-900/20"
+    >
       {/* Animated Background Blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '8s' }} />

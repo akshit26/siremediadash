@@ -66,9 +66,10 @@ function useAnimatedCounts(targets, duration = 1800) {
 
 export default function HomePage() {
   const cardRef = useRef(null);
+  const videoRef = useRef(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(22);
+  const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(flowSteps[0].id);
   const [searchMessage, setSearchMessage] = useState('Private network search ready.');
   const targetCounts = useMemo(
@@ -85,12 +86,31 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!isPlaying) return;
-    const id = setInterval(() => {
-      setProgress((prev) => (prev >= 100 ? 6 : prev + 5));
-    }, 450);
-    return () => clearInterval(id);
-  }, [isPlaying]);
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTimeUpdate = () => {
+      if (!video.duration || Number.isNaN(video.duration)) return;
+      setProgress(Math.min(100, (video.currentTime / video.duration) * 100));
+    };
+
+    const handleVideoEnd = () => {
+      setIsPlaying(false);
+      setProgress(100);
+    };
+
+    const handleLoadedMetadata = () => setProgress(0);
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('ended', handleVideoEnd);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('ended', handleVideoEnd);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    };
+  }, []);
 
   const handleMouseMove = (event) => {
     const card = cardRef.current;
@@ -115,7 +135,37 @@ export default function HomePage() {
     setTimeout(() => setSearchMessage('Private network search ready.'), 1300);
   };
 
-  const togglePlay = () => setIsPlaying((prev) => !prev);
+  const toggleVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      if (video.ended) {
+        video.currentTime = 0;
+      }
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, []);
 
   return (
     <div className="page-shell">
@@ -144,7 +194,7 @@ export default function HomePage() {
             <span className="dot" />
             <span>Gujarat, India</span>
           </div>
-          <button className="login">Login / Signup</button>
+          <button className="login">Log in / Sign up</button>
         </div>
       </header>
 
@@ -170,7 +220,7 @@ export default function HomePage() {
               <div className="search-context">Private creator network • Only available after onboarding</div>
               <form className="search-form" onSubmit={handleSubmit}>
                 <label className="sr-only" htmlFor="search">
-                  Search influencers
+                  Search verified creators inside your workspace
                 </label>
                 <input id="search" type="search" placeholder={searchPlaceholders[placeholderIndex]} />
                 <div className="filter" aria-hidden>
@@ -178,14 +228,15 @@ export default function HomePage() {
                     <path d="M3 6h18v2l-7 6v4l-4 2v-6L3 8z" />
                   </svg>
                 </div>
-                <button type="submit">Search creators</button>
+                <button type="submit">Search private roster</button>
               </form>
               <div className="search-message">{searchMessage}</div>
               <div className="hero-actions">
                 <button className="primary-cta" onClick={() => setActiveStep('deliverables')}>
-                  Get Started
+                  <span>Get Started</span>
+                  <span aria-hidden>↗</span>
                 </button>
-                <button className="ghost-cta" onClick={togglePlay}>
+                <button className="ghost-cta" onClick={toggleVideo}>
                   {isPlaying ? 'Pause walkthrough' : 'Preview dashboard'}
                 </button>
               </div>
@@ -213,9 +264,30 @@ export default function HomePage() {
                 <span className="pill">See Your Campaign Flow</span>
               </div>
               <div className="card-body">
-                <div className="video-box" onClick={togglePlay} role="button" tabIndex={0}>
-                  <div className={`play-toggle ${isPlaying ? 'pause' : ''}`}>
-                    {isPlaying ? <span>❚❚</span> : <span>▶</span>}
+                <div
+                  className="video-box"
+                  onClick={toggleVideo}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      toggleVideo();
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <div className="video-frame">
+                    <video
+                      ref={videoRef}
+                      preload="metadata"
+                      playsInline
+                      muted
+                      src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                      aria-label="Sample campaign walkthrough video"
+                    />
+                    <div className={`play-toggle ${isPlaying ? 'pause' : ''}`}>
+                      {isPlaying ? <span>❚❚</span> : <span>▶</span>}
+                    </div>
                   </div>
                   <div className="video-copy">
                     <p className="eyebrow">Walkthrough</p>

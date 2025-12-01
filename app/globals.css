@@ -80,14 +80,12 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: conic-gradient(
-    from 120deg,
-    rgba(56, 189, 248, 0.4),
-    rgba(14, 165, 233, 0.18),
-    rgba(59, 130, 246, 0.42),
-    rgba(14, 165, 233, 0.3),
-    rgba(56, 189, 248, 0.4)
-  );
+  background: conic-gradient(from 120deg,
+      rgba(56, 189, 248, 0.4),
+      rgba(14, 165, 233, 0.18),
+      rgba(59, 130, 246, 0.42),
+      rgba(14, 165, 233, 0.3),
+      rgba(56, 189, 248, 0.4));
   opacity: 0.45;
   filter: blur(24px);
   z-index: -1;
@@ -881,6 +879,154 @@ a {
 
   .card-body {
     padding: 18px 16px 18px;
+    opacity: 0.85;
+  }
+
+
+}
+
+.video-copy .subline {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+}
+
+.progress {
+  grid-column: 1 / -1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #a5b4fc, #38bdf8);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.timeline {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.chip {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 9px 12px;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.chip-icon {
+  font-size: 14px;
+  display: inline-flex;
+}
+
+.chip.active {
+  background: #fff;
+  color: #0f172a;
+  box-shadow: 0 10px 26px rgba(255, 255, 255, 0.2);
+}
+
+.timeline-detail {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #e0f2fe;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 28px 0 16px;
+}
+
+.pill {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.05);
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.pill.active,
+.pill:hover {
+  color: var(--primary);
+  background: rgba(37, 99, 255, 0.12);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/*
+ * Responsive system
+ * Mobile-first enhancements with explicit tablet breakpoints to keep
+ * navigation, hero, and media elements comfortable on all screens.
+ */
+
+@media (max-width: 1200px) {
+  .page-shell {
+    padding: 24px 18px 64px;
+  }
+
+  .top-bar {
+    gap: 14px;
+  }
+
+  .nav-links {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 960px) {
+
+  /* Tablet: tighten layout without collapsing hero visuals */
+  .page-shell {
+    padding: 20px 18px 60px;
+  }
+
+  .hero {
+    padding: 36px 28px;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .hero-card {
+    max-width: 620px;
+    margin: 0 auto;
+    transform: none !important;
+  }
+
+  .card-body {
+    padding: 18px 16px 18px;
   }
 
   .search-form {
@@ -958,42 +1104,32 @@ a {
   }
 
   .video-frame {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
+    padding-bottom: 4px;
+  }
+
+  .actions {
+    width: auto;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(32px, 8vw, 40px);
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
   }
-}
 
-@media (max-width: 640px) {
-  .page-shell {
-    padding: 16px 10px 52px;
-  }
-
-  .top-bar {
-    gap: 8px;
-  }
-
-  .hero {
-    padding: 24px 16px;
-    border-radius: 18px;
-  }
-
-  .search-form {
-    grid-template-columns: 1fr;
-  }
-
-  .search-form .filter,
-  .search-form button {
+  .hero-actions button {
     width: 100%;
+    justify-content: center;
   }
 
-  .cta-row {
-    grid-template-columns: 1fr;
+  .hero-card {
+    margin-top: 24px;
+    padding: 16px;
   }
 }
 

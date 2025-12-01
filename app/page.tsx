@@ -1,12 +1,26 @@
 'use client';
 
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type FormEvent, type MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
+import cardsData from '../data/section2Cards.json';
 
-const Section2 = dynamic(() => import('../components/Section2'));
+type HeroStat = {
+  key: string;
+  label: string;
+  value: number;
+};
 
-const heroStats = [
+type TradingCardData = {
+  id: string;
+  title: string;
+  image: string;
+  definition: string;
+  flavor: string;
+  merits: string[];
+  whyUs: string[];
+};
+
+const heroStats: HeroStat[] = [
   { key: 'creators', label: 'Creators Verified', value: 1240 },
   { key: 'campaigns', label: 'Campaigns Managed', value: 89 },
   { key: 'categories', label: 'Brand Categories', value: 32 },
@@ -41,16 +55,16 @@ const flowSteps = [
   },
 ];
 
-function useAnimatedCounts(targets, duration = 1800) {
-  const [counts, setCounts] = useState(() =>
-    Object.fromEntries(Object.entries(targets).map(([key]) => [key, 0]))
+function useAnimatedCounts(targets: Record<string, number>, duration = 1800) {
+  const [counts, setCounts] = useState<Record<string, number>>(() =>
+    Object.fromEntries(Object.keys(targets).map((key) => [key, 0]))
   );
 
   useEffect(() => {
-    let raf;
+    let raf: number;
     const start = performance.now();
 
-    const tick = (now) => {
+    const tick = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       const nextCounts = Object.fromEntries(
@@ -67,9 +81,173 @@ function useAnimatedCounts(targets, duration = 1800) {
   return counts;
 }
 
+function CommandCenterShowcase() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [stacked, setStacked] = useState(false);
+  const [flippedId, setFlippedId] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState<string>((cardsData as TradingCardData[])[0]?.id ?? '');
+
+  useEffect(() => {
+    const handleMode = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const isMobile = window.innerWidth < 640;
+      const shouldStack = !isMobile && rect.top > 220;
+      setStacked(shouldStack);
+    };
+
+    handleMode();
+    window.addEventListener('scroll', handleMode, { passive: true });
+    window.addEventListener('resize', handleMode);
+    return () => {
+      window.removeEventListener('scroll', handleMode);
+      window.removeEventListener('resize', handleMode);
+    };
+  }, []);
+
+  const cards = cardsData as TradingCardData[];
+  const centerIndex = Math.floor(cards.length / 2);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative z-0 mt-12 w-full overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 px-4 pb-24 pt-16 shadow-2xl shadow-sky-900/20 sm:px-8 sm:pt-32 sm:pb-40"
+      aria-labelledby="command-center-heading"
+    >
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -left-[10%] -top-[16%] h-64 w-64 rounded-full bg-blue-600/20 blur-[120px]" />
+        <div className="absolute -bottom-[18%] -right-[8%] h-64 w-64 rounded-full bg-purple-500/20 blur-[120px]" />
+      </div>
+
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-4 text-center text-slate-50">
+        <span className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">
+          Campaign Command Center
+        </span>
+        <h2 id="command-center-heading" className="text-3xl font-extrabold tracking-tight sm:text-5xl">
+          Same power. Fresh canvas.
+        </h2>
+        <p className="max-w-3xl text-base font-medium text-blue-50/90 sm:text-lg">
+          Explore the exact features from our previous workspace—approvals, deliverables, timelines, and payouts—now remixed into a new interactive canvas built directly into the page.
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-blue-50/80">
+          <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Tap to flip details</span>
+          <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Scroll to stack or spread</span>
+          <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Mobile-friendly layout</span>
+        </div>
+      </div>
+
+      <div
+        className={`relative z-10 mx-auto mt-12 w-full max-w-[1400px] transition-all duration-500 ${
+          stacked ? 'h-[560px] flex items-center justify-center' : ''
+        }`}
+      >
+        <div
+          className={`flex w-full gap-5 transition-all duration-500 ${
+            stacked ? 'relative h-full items-center justify-center' : 'overflow-x-auto pb-8'
+          }`}
+        >
+          {cards.map((card, index) => {
+            const offset = index - centerIndex;
+            const deckTransform = stacked
+              ? `translateX(${offset * 26}px) translateY(${Math.abs(offset) * 14}px) rotate(${offset * 5}deg) scale(${
+                  index === centerIndex ? 1 : 0.96
+                })`
+              : 'none';
+
+            const isActive = activeId === card.id;
+            const isFlipped = flippedId === card.id;
+
+            return (
+              <div
+                key={card.id}
+                className={`${
+                  stacked ? 'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' : 'snap-center flex-shrink-0'
+                } w-full sm:w-[320px] md:w-[360px]`}
+                style={{
+                  transform: deckTransform,
+                  zIndex: stacked ? cards.length - Math.abs(offset) : 1,
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveId(card.id);
+                    setFlippedId(isFlipped ? null : card.id);
+                  }}
+                  className={`group relative block h-full overflow-hidden rounded-2xl border border-white/15 bg-slate-900/70 p-4 text-left shadow-2xl shadow-black/20 backdrop-blur ${
+                    isActive ? 'ring-2 ring-blue-400/70' : 'ring-1 ring-white/5'
+                  } transition`}
+                  aria-pressed={isFlipped}
+                >
+                  <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.14em] text-blue-100/70">
+                    <span>{card.flavor}</span>
+                    <span>{isFlipped ? 'Story' : 'Snapshot'}</span>
+                  </div>
+                  <div className="mt-4 overflow-hidden rounded-xl bg-slate-800/70 shadow-inner">
+                    <div
+                      className="aspect-[4/3] w-full bg-cover bg-center"
+                      style={{
+                        backgroundImage: `linear-gradient(180deg, rgba(15,23,42,0.3), rgba(15,23,42,0.6)), url(${card.image})`,
+                      }}
+                    />
+                  </div>
+                  <div className="mt-5 flex flex-col gap-2">
+                    <h3 className="text-xl font-bold text-white">{card.title}</h3>
+                    <p className="text-sm text-blue-100/90">{card.definition}</p>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-blue-50/80">
+                    {card.merits.map((item) => (
+                      <span key={item} className="rounded-lg bg-white/10 px-3 py-2 font-semibold">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div
+                    className={`mt-5 rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-blue-50/90 transition-all duration-500 ${
+                      isFlipped ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <p className="text-xs uppercase tracking-[0.18em] text-blue-100/80">Why it matters</p>
+                    <ul className="mt-3 space-y-2">
+                      {card.whyUs.map((item) => (
+                        <li key={item} className="flex items-start gap-2">
+                          <span className="mt-1 text-blue-300">◆</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between text-sm text-blue-100/80">
+                    <span className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      {stacked ? 'Stacked view' : 'Spread view'}
+                    </span>
+                    <span className="opacity-80">Tap to flip</span>
+                  </div>
+                </button>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 text-center text-sm text-blue-100/80">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">{stacked ? 'Scroll down to spread' : 'Scroll up to stack'}</span>
+            <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Hold & drag on desktop</span>
+            <span className="rounded-full bg-white/10 px-3 py-1 font-semibold">Swipe on mobile</span>
+          </div>
+          <p className="text-xs text-blue-100/70">Live accessibility hint: cards keep the same content as our previous section, fully restyled.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
-  const cardRef = useRef(null);
-  const videoRef = useRef(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -82,10 +260,10 @@ export default function HomePage() {
   const counts = useAnimatedCounts(targetCounts);
 
   useEffect(() => {
-    const id = setInterval(() => {
+    const id = window.setInterval(() => {
       setPlaceholderIndex((prev) => (prev + 1) % searchPlaceholders.length);
     }, 3200);
-    return () => clearInterval(id);
+    return () => window.clearInterval(id);
   }, []);
 
   useEffect(() => {
@@ -115,7 +293,7 @@ export default function HomePage() {
     };
   }, []);
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
@@ -132,7 +310,7 @@ export default function HomePage() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearchMessage('Searching your exclusive roster...');
     setTimeout(() => setSearchMessage('Private network search ready.'), 1300);
@@ -146,7 +324,7 @@ export default function HomePage() {
       if (video.ended) {
         video.currentTime = 0;
       }
-      video.play();
+      void video.play();
       setIsPlaying(true);
     } else {
       video.pause();
@@ -224,8 +402,7 @@ export default function HomePage() {
                 <span className="block">Campaign Workspace</span>
               </h1>
               <p className="lead">
-                Work with Sire Media’s verified creators and manage your entire campaign—from ideation to approvals
-                to deliverables—in one intelligent dashboard.
+                Work with Sire Media’s verified creators and manage your entire campaign—from ideation to approvals to deliverables—in one intelligent dashboard.
               </p>
               <div className="search-context">Private creator network • Only available after onboarding</div>
               <form className="search-form" onSubmit={handleSubmit}>
@@ -338,8 +515,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <Section2 />
-
+        <CommandCenterShowcase />
       </main>
     </div>
   );

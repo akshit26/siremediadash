@@ -1,0 +1,38 @@
+[
+  {
+    "id": "deliverables",
+    "title": "Deliverables Tracking",
+    "subtitle": "Everything Organized in One Place",
+    "description": "Track reels, stories, photos, reposts, and revision rounds with crystal-clear deadlines.",
+    "tags": ["Reels", "Stories", "UGC", "Posts"],
+    "ctaLabel": "View Deliverables",
+    "ctaHref": "#"
+  },
+  {
+    "id": "approvals",
+    "title": "1-Click Approvals",
+    "subtitle": "No More WhatsApp Confusion",
+    "description": "Clients approve content with a single click. All comments and revisions are documented.",
+    "tags": ["Review", "Comments", "Timestamps"],
+    "ctaLabel": "View Approval Flow",
+    "ctaHref": "#"
+  },
+  {
+    "id": "timelines",
+    "title": "Creator Timelines",
+    "subtitle": "Your Full Campaign at a Glance",
+    "description": "See every creator’s journey — draft, shoot, edit, revise, approve, post.",
+    "tags": ["Calendar", "Workflow"],
+    "ctaLabel": "View Timelines",
+    "ctaHref": "#"
+  },
+  {
+    "id": "reports",
+    "title": "Smart Reports",
+    "subtitle": "Insights Without Guesswork",
+    "description": "See reports with ROI, saves, shares, ER, cost breakdown and summary PDFs.",
+    "tags": ["Analytics", "ROI"],
+    "ctaLabel": "View Reports",
+    "ctaHref": "#"
+  }
+]

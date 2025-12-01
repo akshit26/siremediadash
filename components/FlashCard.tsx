@@ -1,19 +1,17 @@
 'use client';
 
-import { useEffect, useMemo, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { useEffect, useMemo, useState, memo, type KeyboardEvent, type PointerEvent } from 'react';
 import { AnimatePresence, motion, useReducedMotion, type Variants } from 'framer-motion';
 
 export type FlashCardData = {
   id: string;
   title: string;
-  badge: string;
-  subtitle: string;
-  summary: string;
+  image: string;
+  definition: string;
+  flavor: string;
   merits: string[];
   demerits: string[];
   whyUs: string[];
-  example: string;
-  ctaLabel: string;
 };
 
 export type CardState = 'active' | 'near' | 'inactive';
@@ -21,7 +19,8 @@ export type CardState = 'active' | 'near' | 'inactive';
 interface FlashCardProps {
   card: FlashCardData;
   state: CardState;
-  onFocus: () => void;
+  index: number;
+  onFocus: (index: number) => void;
 }
 
 const cardVariants: Variants = {
@@ -91,7 +90,7 @@ const reducedFlipVariants: Variants = {
   exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
-export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
+function FlashCard({ card, state, index, onFocus }: FlashCardProps) {
   const shouldReduceMotion = useReducedMotion();
   const [flashKey, setFlashKey] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -141,7 +140,7 @@ export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
       animate={state}
       layout
       tabIndex={state === 'inactive' ? -1 : 0}
-      onFocus={onFocus}
+      onFocus={() => onFocus(index)}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetTilt}
       onKeyDown={handleKeyDown}
@@ -193,7 +192,7 @@ export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
                 animate={state === 'active' ? 'visible' : 'hidden'}
               >
                 <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-sky-200/80">
-                  <span className={`badge-pill ${shimmerClass}`}>{card.badge}</span>
+                  <span className={`badge-pill ${shimmerClass}`}>{card.flavor}</span>
                   <span className="flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-[11px] font-semibold text-sky-100/90">
                     <span aria-hidden>⬈</span>
                     Premium workspace
@@ -209,7 +208,7 @@ export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
                 </div>
 
                 <motion.p className="text-[13px] font-semibold tracking-[0.16em] text-sky-200/75" variants={itemVariants}>
-                  {card.subtitle}
+                  {card.definition.substring(0, 30)}...
                 </motion.p>
                 <motion.h3
                   id={`card-${card.id}`}
@@ -219,7 +218,7 @@ export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
                   {card.title}
                 </motion.h3>
                 <motion.p className="max-w-2xl text-[15px] leading-relaxed text-sky-100/90" variants={itemVariants}>
-                  {card.summary}
+                  {card.definition}
                 </motion.p>
 
                 <motion.div className="flex flex-wrap gap-2" variants={itemVariants}>
@@ -240,14 +239,14 @@ export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
                     <span className="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 font-semibold text-sky-100">
                       <span aria-hidden>⇵</span> Scroll or tap to reveal
                     </span>
-                    <span className="text-[12px] text-sky-100/70">Example: {card.example}</span>
+                    <span className="text-[12px] text-sky-100/70">Example: See demo</span>
                   </div>
                   <button
                     type="button"
                     onClick={handleFlip}
                     className="cta-pill"
                   >
-                    <span>{card.ctaLabel}</span>
+                    <span>Learn more</span>
                     <span aria-hidden>↗</span>
                   </button>
                 </motion.div>
@@ -315,7 +314,7 @@ export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
                   <div className="sm:col-span-2">
                     <div className="rounded-2xl bg-white/5 px-4 py-3 text-[15px] text-sky-50 shadow-inner shadow-sky-900/40">
                       <div className="text-[12px] uppercase tracking-[0.16em] text-sky-200/80">Example</div>
-                      <div className="mt-1 font-semibold text-sky-50/95">{card.example}</div>
+                      <div className="mt-1 font-semibold text-sky-50/95">See demo</div>
                     </div>
                   </div>
                 </div>
@@ -342,3 +341,5 @@ export default function FlashCard({ card, state, onFocus }: FlashCardProps) {
     </motion.article>
   );
 }
+
+export default memo(FlashCard);

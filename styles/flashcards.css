@@ -82,6 +82,7 @@
   backdrop-filter: blur(18px);
   transform-style: preserve-3d;
   transition: transform 220ms ease;
+  will-change: transform;
 }
 
 .card-glow {
@@ -133,6 +134,7 @@
   border-radius: 16px;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
 .card-face.front {

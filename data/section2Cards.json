@@ -1,71 +1,82 @@
 [
   {
-    "id": "approvals",
+    "id": "c01",
     "title": "1-Click Approvals",
-    "badge": "Premium Workflow",
-    "subtitle": "No more WhatsApp confusion",
-    "summary": "Clients approve drafts in one click; all comments and revision history are timestamped and stored.",
+    "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600",
+    "definition": "Approve drafts instantly. Comments, revisions, and timestamps—all in one place.",
+    "flavor": "Premium Workflow",
     "merits": [
-      "Instant client approval links",
-      "Full revision history",
-      "Timestamps and approver identity"
-    ],
-    "demerits": [
-      "Requires client onboarding",
-      "Not suitable for informal approvals"
+      "Instant links",
+      "Revision history",
+      "Timestamps"
     ],
     "whyUs": [
-      "We enforce approval timestamps",
-      "We keep revision links with deliverables",
-      "We integrate approvals into invoices"
-    ],
-    "example": "Client can approve a reel draft and leave exact time-coded notes.",
-    "ctaLabel": "Preview Approval Flow"
+      "We enforce timestamps",
+      "We link approvals to invoices"
+    ]
   },
   {
-    "id": "deliverables",
+    "id": "c02",
     "title": "Deliverables Tracker",
-    "badge": "Operations",
-    "subtitle": "Everything organized in one place",
-    "summary": "Track every creator deliverable: status, upload, review, changes, and post date.",
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
+    "definition": "Track every deliverable: status, upload, review, changes, and post date.",
+    "flavor": "Operations",
     "merits": [
-      "Clear status (pending/submitted/approved)",
+      "Clear status",
       "Auto reminders",
-      "File storage linked to deliverable"
-    ],
-    "demerits": [
-      "Requires creators to upload on time",
-      "Change logs can be heavy for large campaigns"
+      "Linked storage"
     ],
     "whyUs": [
-      "We own creator compliance processes",
-      "We auto-flag delayed uploads",
-      "We link deliverables to payments & invoices"
-    ],
-    "example": "A creator uploads the UGC; ops marks ‘submitted’ and client gets an approval link.",
-    "ctaLabel": "Open Deliverables"
+      "We own compliance",
+      "Auto-flag delays"
+    ]
   },
   {
-    "id": "timelines",
+    "id": "c03",
     "title": "Creator Timelines",
-    "badge": "Planning",
-    "subtitle": "Your campaign on one lane",
-    "summary": "A visual timeline for each creator with milestones and auto-generated posting schedules.",
+    "image": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=600",
+    "definition": "Visual timelines for each creator with milestones and auto-generated schedules.",
+    "flavor": "Planning",
     "merits": [
-      "Easy conflict detection",
-      "Auto-created content calendars",
+      "Conflict detection",
+      "Auto calendars",
       "Per-creator lanes"
     ],
-    "demerits": [
-      "Requires initial setup",
-      "Manual overrides possible"
+    "whyUs": [
+      "Template creation",
+      "Conflict resolution"
+    ]
+  },
+  {
+    "id": "c04",
+    "title": "Real-Time Analytics",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600",
+    "definition": "Live dashboard showing campaign performance across all channels instantly.",
+    "flavor": "Intelligence",
+    "merits": [
+      "Live data",
+      "Cross-platform",
+      "Custom reports"
     ],
     "whyUs": [
-      "We create timeline templates for each category",
-      "We automate reminders for creators",
-      "We provide conflict-resolution suggestions"
+      "Unified dashboard",
+      "Actionable insights"
+    ]
+  },
+  {
+    "id": "c05",
+    "title": "Automated Payouts",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=600",
+    "definition": "Seamless payment processing for creators upon deliverable approval.",
+    "flavor": "Finance",
+    "merits": [
+      "Fast payments",
+      "Tax compliance",
+      "Multi-currency"
     ],
-    "example": "Timeline shows creator A shoot on 24 Nov, submit 26 Nov, post 29 Nov.",
-    "ctaLabel": "View Timelines"
+    "whyUs": [
+      "Escrow security",
+      "Automated tax forms"
+    ]
   }
 ]

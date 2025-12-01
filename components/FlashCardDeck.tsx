@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import cardsData from '../data/section2Cards.json';
 import FlashCard, { type CardState, type FlashCardData } from './FlashCard';
 
@@ -10,6 +10,10 @@ export default function FlashCardDeck() {
   const [liveMessage, setLiveMessage] = useState('');
   const containerRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleFocus = useCallback((index: number) => {
+    setActiveIndex(index);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -100,7 +104,7 @@ export default function FlashCardDeck() {
             data-index={index}
             className="snap-center"
           >
-            <FlashCard card={card} state={getState(index)} onFocus={() => setActiveIndex(index)} />
+            <FlashCard card={card} state={getState(index)} index={index} onFocus={handleFocus} />
           </div>
         ))}
       </div>

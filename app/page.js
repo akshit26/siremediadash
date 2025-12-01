@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Section2 from '../components/Section2';
+
+const Section2 = dynamic(() => import('../components/Section2'));
 
 const heroStats = [
   { key: 'creators', label: 'Creators Verified', value: 1240 },

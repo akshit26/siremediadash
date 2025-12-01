@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Section2 from '../components/Section2';
 
 const heroStats = [
   { key: 'creators', label: 'Creators Verified', value: 1240 },
@@ -327,6 +328,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <Section2 />
 
       </main>
     </div>

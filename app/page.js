@@ -4,9 +4,9 @@ import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 const heroStats = [
-  { key: 'influencers', label: 'Influencers', value: 432452 },
-  { key: 'brands', label: 'Brands', value: 94002 },
-  { key: 'categories', label: 'Categories', value: 1845 },
+  { key: 'creators', label: 'Creators Verified', value: 1240 },
+  { key: 'campaigns', label: 'Campaigns Managed', value: 89 },
+  { key: 'categories', label: 'Brand Categories', value: 32 },
 ];
 
 const searchPlaceholders = [
@@ -18,9 +18,24 @@ const searchPlaceholders = [
 ];
 
 const flowSteps = [
-  { id: 'deliverables', title: 'Deliverables', detail: 'Shot lists, posting cadence, and approvals in one lane.' },
-  { id: 'approvals', title: 'Approvals', detail: 'Timed checkpoints with creator nudges and notes.' },
-  { id: 'timeline', title: 'Timeline', detail: 'Gantt-like view for reels, stories, and giveaways.' },
+  {
+    id: 'deliverables',
+    title: 'Deliverables',
+    detail: 'Shot lists, posting cadence, and approvals in one lane.',
+    icon: '📦',
+  },
+  {
+    id: 'approvals',
+    title: 'Approvals',
+    detail: 'Timed checkpoints with creator nudges and notes.',
+    icon: '✅',
+  },
+  {
+    id: 'timeline',
+    title: 'Timelines',
+    detail: 'Gantt-like view for reels, stories, and giveaways.',
+    icon: '⏱️',
+  },
 ];
 
 function useAnimatedCounts(targets, duration = 1800) {
@@ -110,7 +125,10 @@ export default function HomePage() {
           <div className="logo-mark">
             <Image src="/sire-logo.svg" alt="Sire Media crown logo" width={36} height={32} priority />
           </div>
-          <span>Sire Media</span>
+          <div className="logo-stack">
+            <span>Sire Media</span>
+            <span className="logo-tag">Exclusive Creator Network + Intelligent Campaign Management</span>
+          </div>
         </div>
         <nav className="nav-links">
           <a href="#home" className="active">
@@ -119,6 +137,7 @@ export default function HomePage() {
           <a href="#messages">Messages</a>
           <a href="#campaigns">Campaigns</a>
           <a href="#analytics">Analytics</a>
+          <span className="client-pill">Client Workspace</span>
         </nav>
         <div className="actions">
           <div className="location">
@@ -140,16 +159,15 @@ export default function HomePage() {
           <div className="hero-content">
             <div className="hero-text">
               <h1>
-                Your Personal
-                <br />
-                <span className="highlight">Influencer Campaign</span>
-                <br />
-                Workspace.
+                <span className="block">Your Personal</span>
+                <span className="block highlight">Influencer</span>
+                <span className="block">Campaign Workspace</span>
               </h1>
               <p className="lead">
-                Work with Sire Media’s verified creators and manage your entire campaign—from ideation to
-                execution—through a streamlined and intelligent dashboard.
+                Work with Sire Media’s verified creators and manage your entire campaign—from ideation to approvals
+                to deliverables—in one intelligent dashboard.
               </p>
+              <div className="search-context">Private creator network • Only available after onboarding</div>
               <form className="search-form" onSubmit={handleSubmit}>
                 <label className="sr-only" htmlFor="search">
                   Search influencers
@@ -160,12 +178,12 @@ export default function HomePage() {
                     <path d="M3 6h18v2l-7 6v4l-4 2v-6L3 8z" />
                   </svg>
                 </div>
-                <button type="submit">Get Started</button>
+                <button type="submit">Search creators</button>
               </form>
               <div className="search-message">{searchMessage}</div>
               <div className="hero-actions">
                 <button className="primary-cta" onClick={() => setActiveStep('deliverables')}>
-                  Build campaign workspace
+                  Get Started
                 </button>
                 <button className="ghost-cta" onClick={togglePlay}>
                   {isPlaying ? 'Pause walkthrough' : 'Preview dashboard'}
@@ -215,6 +233,9 @@ export default function HomePage() {
                       className={`chip ${activeStep === step.id ? 'active' : ''}`}
                       onClick={() => setActiveStep(step.id)}
                     >
+                      <span className="chip-icon" aria-hidden>
+                        {step.icon}
+                      </span>
                       {step.title}
                     </button>
                   ))}

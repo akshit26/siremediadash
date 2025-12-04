@@ -1,0 +1,56 @@
+[
+  {
+    "id": "billing",
+    "title": "Transparent Billing",
+    "label": "Ops",
+    "image": "https://images.unsplash.com/photo-1454165205744-3b78555e5572?auto=format&fit=crop&w=800&q=80",
+    "merits": ["Invoice-level clarity", "No hidden platform fees", "Shared cost dashboards"],
+    "demerits": "We require approvals before any spend.",
+    "whyUs": ["You see every creator payout", "Live alerts when budgets move"]
+  },
+  {
+    "id": "scorecard",
+    "title": "Creator Reliability Scorecard",
+    "label": "Data",
+    "image": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=800&q=80",
+    "merits": ["On-time posting history", "Content quality scoring", "Fraud + bot sweeps"],
+    "demerits": "We decline creators who don't meet the bar.",
+    "whyUs": ["Confidence before you brief", "Scorecard stays visible for every deliverable"]
+  },
+  {
+    "id": "matching",
+    "title": "AI Matching Engine",
+    "label": "Data",
+    "image": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=800&q=80",
+    "merits": ["Audience overlap checks", "Tone + aesthetic matching", "Lookalike creator discovery"],
+    "demerits": "We still run human QA on every match.",
+    "whyUs": ["Lower mismatch risk", "Saves hours of manual scouting"]
+  },
+  {
+    "id": "playbooks",
+    "title": "Creative Playbooks",
+    "label": "Creative",
+    "image": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
+    "merits": ["UGC scripting frameworks", "Hook + CTA testing", "Platform-native references"],
+    "demerits": "We ask for brand guardrails upfront.",
+    "whyUs": ["Less back-and-forth revisions", "Faster approvals"]
+  },
+  {
+    "id": "ops",
+    "title": "Ops Command Desk",
+    "label": "Ops",
+    "image": "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80",
+    "merits": ["SLA-backed responses", "Centralised approvals", "Escalation paths"],
+    "demerits": "We follow a strict change-log.",
+    "whyUs": ["No updates lost in email", "Single source of truth"]
+  },
+  {
+    "id": "reporting",
+    "title": "Reporting & Optimisation",
+    "label": "Data",
+    "image": "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=800&q=80",
+    "merits": ["Benchmark vs category", "Creative teardown notes", "Next test recommendations"],
+    "demerits": "We sunset tactics that underperform.",
+    "whyUs": ["Decisions backed by evidence", "Keeps the program compounding"]
+  }
+]

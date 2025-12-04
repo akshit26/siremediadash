@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { type FormEvent, type MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import CommandCenterShowcase from '../components/CommandCenterShowcase';
+import SectionThree from '../components/SectionThree';
 import { heroStats, searchPlaceholders, flowSteps } from '../data/constants';
 import { useAnimatedCounts } from '../hooks/useAnimatedCounts';
 
@@ -307,6 +308,7 @@ export default function HomePage() {
         </section>
 
         <CommandCenterShowcase />
+        <SectionThree />
       </main>
     </div>
   );

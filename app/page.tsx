@@ -182,6 +182,11 @@ export default function HomePage() {
 
         <main>
           <section className="hero" id="home">
+            <div className="depth-orbs" aria-hidden={true}>
+              <span className="orb small" />
+              <span className="orb medium" />
+              <span className="orb large" />
+            </div>
             <div className="floating-bubbles">
               <span className="bubble b1" />
               <span className="bubble b2" />

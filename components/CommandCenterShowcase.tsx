@@ -43,12 +43,12 @@ export default function CommandCenterShowcase() {
     return (
         <section
             ref={sectionRef}
-            className="relative z-0 mt-12 w-full overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 px-2 pb-24 pt-16 shadow-2xl shadow-sky-900/20 sm:px-8 sm:pt-32 sm:pb-40"
+            className="relative z-0 mt-12 w-full overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-sire-midnight via-sire-ink to-black px-2 pb-24 pt-16 shadow-2xl shadow-neon-blue/20 sm:px-8 sm:pt-32 sm:pb-40"
             aria-labelledby="command-center-heading"
         >
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute -left-[10%] -top-[16%] h-64 w-64 rounded-full bg-blue-600/20 blur-[120px]" />
-                <div className="absolute -bottom-[18%] -right-[8%] h-64 w-64 rounded-full bg-purple-500/20 blur-[120px]" />
+                <div className="absolute -left-[10%] -top-[16%] h-64 w-64 rounded-full bg-neon-blue/20 blur-[120px]" />
+                <div className="absolute -bottom-[18%] -right-[8%] h-64 w-64 rounded-full bg-neon-purple/20 blur-[120px]" />
             </div>
 
             <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center gap-4 text-center text-slate-50">

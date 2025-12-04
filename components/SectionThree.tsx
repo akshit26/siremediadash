@@ -4,7 +4,7 @@ import {
   AnimatePresence,
   LayoutGroup,
   animate,
-  motion,
+  m,
   useAnimation,
   useMotionValue,
   useReducedMotion,
@@ -168,14 +168,14 @@ function FeatureBadge({ type, target, inView }: { type: 'count' | 'delta' | 'pul
   }, [count, type]);
 
   return (
-    <motion.span
+    <m.span
       className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-blue-100"
       animate={controls}
       aria-live="polite"
     >
       <span className="h-2 w-2 rounded-full bg-sky-300" />
       {display}
-    </motion.span>
+    </m.span>
   );
 }
 
@@ -183,7 +183,7 @@ function WhyUsCardItem({ card, index, shouldReduceMotion }: { card: WhyUsCard; i
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <motion.article
+    <m.article
       className="group relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-white/10 p-5 shadow-2xl shadow-sky-950/40"
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
       whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -193,7 +193,7 @@ function WhyUsCardItem({ card, index, shouldReduceMotion }: { card: WhyUsCard; i
       style={{ transformStyle: 'preserve-3d' }}
       aria-label={`${card.title} card showing ${card.label}`}
     >
-      <motion.button
+      <m.button
         type="button"
         className="relative block h-full w-full"
         onClick={() => setFlipped((prev) => !prev)}
@@ -207,7 +207,7 @@ function WhyUsCardItem({ card, index, shouldReduceMotion }: { card: WhyUsCard; i
         style={{ perspective: '1200px' }}
       >
         <div className="relative h-full" aria-hidden={false}>
-          <motion.div
+          <m.div
             className="absolute inset-0 rounded-2xl border border-white/10 bg-white/10 p-4 shadow-inner shadow-sky-900/30"
             animate={shouldReduceMotion ? { opacity: flipped ? 0 : 1 } : { rotateY: flipped ? 180 : 0, opacity: flipped ? 0 : 1 }}
             transition={{ duration: shouldReduceMotion ? 0.12 : 0.52, ease: 'easeInOut' }}
@@ -225,8 +225,8 @@ function WhyUsCardItem({ card, index, shouldReduceMotion }: { card: WhyUsCard; i
             </div>
             <h4 className="mt-2 text-xl font-bold">{card.title}</h4>
             <p className="mt-1 text-sm text-sky-100/80">Reasons we obsess over {card.label.toLowerCase()}.</p>
-          </motion.div>
-          <motion.div
+          </m.div>
+          <m.div
             className="absolute inset-0 rounded-2xl border border-sky-200/30 bg-slate-900/80 p-4 shadow-inner shadow-sky-900/40"
             animate={shouldReduceMotion ? { opacity: flipped ? 1 : 0 } : { rotateY: flipped ? 0 : -180, opacity: flipped ? 1 : 0 }}
             transition={{ duration: shouldReduceMotion ? 0.12 : 0.52, ease: 'easeInOut' }}
@@ -264,10 +264,10 @@ function WhyUsCardItem({ card, index, shouldReduceMotion }: { card: WhyUsCard; i
                 </ul>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
-      </motion.button>
-    </motion.article>
+      </m.button>
+    </m.article>
   );
 }
 
@@ -312,11 +312,11 @@ export default function SectionThree() {
   const activeProcess = processSteps.find((s) => s.id === activeStep) ?? processSteps[0];
 
   return (
-    <section id="section-3" className="relative mt-20 overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 py-20 text-white">
+    <section id="section-3" className="relative mt-20 overflow-hidden bg-gradient-to-b from-sire-midnight via-sire-ink to-sire-midnight py-20 text-white">
       <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute left-[10%] top-10 h-64 w-64 rounded-full bg-sky-400/20 blur-[120px]" />
-        <div className="absolute right-[6%] top-20 h-72 w-72 rounded-full bg-blue-600/20 blur-[140px]" />
-        <div className="absolute bottom-12 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
+        <div className="absolute left-[10%] top-10 h-64 w-64 rounded-full bg-neon-blue/20 blur-[120px]" />
+        <div className="absolute right-[6%] top-20 h-72 w-72 rounded-full bg-neon-purple/20 blur-[140px]" />
+        <div className="absolute bottom-12 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-neon-blue/10 blur-[120px]" />
       </div>
 
       <div className="relative mx-auto flex max-w-[1200px] flex-col gap-16 px-4 sm:px-6 lg:px-8">
@@ -334,7 +334,7 @@ export default function SectionThree() {
                 <span>{phrases.join(' • ')}</span>
               ) : (
                 <AnimatePresence mode="wait">
-                  <motion.span
+                  <m.span
                     key={phraseIndex}
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0, transition: { duration: 0.24 } }}
@@ -343,7 +343,7 @@ export default function SectionThree() {
                   >
                     {typed}
                     <span className="ml-1 inline-block h-5 w-[2px] animate-pulse rounded-full bg-sky-200" aria-hidden />
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
               )}
             </div>
@@ -369,7 +369,7 @@ export default function SectionThree() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {featureCards.map((card, index) => (
-              <motion.article
+              <m.article
                 key={card.id}
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-sky-950/40 backdrop-blur"
                 initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
@@ -390,7 +390,7 @@ export default function SectionThree() {
                   <h4 className="text-xl font-bold">{card.title}</h4>
                   <p className="text-sm text-sky-100/80">{card.copy}</p>
                 </div>
-              </motion.article>
+              </m.article>
             ))}
           </div>
         </div>
@@ -429,7 +429,7 @@ export default function SectionThree() {
                 preserveAspectRatio="none"
                 aria-hidden
               >
-                <motion.line
+                <m.line
                   x1="0"
                   x2="100"
                   y1="1"
@@ -442,7 +442,7 @@ export default function SectionThree() {
                 />
               </svg>
               {processSteps.map((step) => (
-                <motion.button
+                <m.button
                   key={step.id}
                   type="button"
                   onClick={() => setActiveStep(step.id)}
@@ -453,22 +453,22 @@ export default function SectionThree() {
                   aria-pressed={activeStep === step.id}
                   aria-label={`${step.title}: ${step.subtitle}`}
                 >
-                  <motion.span
+                  <m.span
                     className={`flex h-12 w-12 items-center justify-center rounded-full border ${activeStep === step.id ? 'border-sky-200 bg-sky-500/20 text-white' : 'border-white/10 bg-white/5 text-sky-200'}`}
                     layout
                     transition={shouldReduceMotion ? undefined : { type: 'spring', stiffness: 220, damping: 16 }}
                   >
                     {step.title.charAt(0)}
-                  </motion.span>
+                  </m.span>
                   <span className="max-w-[140px] text-xs sm:max-w-[200px]">{step.title}</span>
-                </motion.button>
+                </m.button>
               ))}
             </div>
             <div className="grid gap-6 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/70 to-slate-900/80 p-6 shadow-xl shadow-sky-950/40">
                 <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/10 to-transparent" aria-hidden />
                 <AnimatePresence mode="wait">
-                  <motion.div
+                  <m.div
                     key={activeStep}
                     initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
                     animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
@@ -506,7 +506,7 @@ export default function SectionThree() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 </AnimatePresence>
               </div>
               <div className="space-y-4">
@@ -515,7 +515,7 @@ export default function SectionThree() {
                 <ul className="space-y-3 text-sky-50/90">
                   <AnimatePresence mode="popLayout">
                     {activeProcess.bullets.map((item) => (
-                      <motion.li
+                      <m.li
                         key={`${activeProcess.id}-${item}`}
                         initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 8 }}
                         animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -525,7 +525,7 @@ export default function SectionThree() {
                       >
                         <span className="mt-1 h-2 w-2 rounded-full bg-sky-300" aria-hidden />
                         <span>{item}</span>
-                      </motion.li>
+                      </m.li>
                     ))}
                   </AnimatePresence>
                 </ul>
@@ -571,7 +571,7 @@ export default function SectionThree() {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {pricing.map((plan, index) => (
-              <motion.article
+              <m.article
                 key={plan.id}
                 className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-sky-950/40 backdrop-blur"
                 initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
@@ -595,19 +595,19 @@ export default function SectionThree() {
                   ))}
                 </ul>
                 {showRanges && (
-                  <motion.div
+                  <m.div
                     className="mt-4 rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-semibold text-white"
                     initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
                     animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
                     transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
                   >
                     {plan.range}
-                  </motion.div>
+                  </m.div>
                 )}
                 <button className="mt-6 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-sky-400 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-sky-900/40 transition hover:translate-y-[-2px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300">
                   {plan.cta}
                 </button>
-              </motion.article>
+              </m.article>
             ))}
           </div>
         </div>

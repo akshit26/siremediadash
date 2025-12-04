@@ -127,6 +127,7 @@ export default function HomePage() {
   return (
     <LazyMotion features={domAnimation}>
       <div className="page-shell">
+
         <div className="announcement-bar" role="banner">
           <span className="announcement-pill">Limited offer</span>
           <span className="announcement-copy">Enroll for a free trial now and unlock your next creator sprint.</span>
@@ -172,11 +173,18 @@ export default function HomePage() {
             <span className="client-pill">Client Workspace</span>
           </nav>
           <div className="actions">
-            <div className="location">
-              <span className="dot" />
-              <span>Gujarat, India</span>
-            </div>
-            <button className="login">Log in / Sign up</button>
+            <button className="login group flex items-center gap-3 pr-1">
+              <div className="relative h-8 w-8 overflow-hidden rounded-full border-2 border-white/20 bg-gradient-to-br from-purple-500 to-indigo-600 shadow-inner">
+                <Image
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                  alt="User avatar"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span>Log in / Sign up</span>
+            </button>
           </div>
         </header>
 

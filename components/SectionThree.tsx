@@ -208,7 +208,7 @@ function WhyUsCardItem({ card, index, shouldReduceMotion }: { card: WhyUsCard; i
       >
         <div className="relative h-full" aria-hidden={false}>
           <m.div
-            className="absolute inset-0 rounded-2xl border border-white/10 bg-white/10 p-4 shadow-inner shadow-sky-900/30"
+            className="relative h-full w-full rounded-2xl border border-white/10 bg-white/10 p-4 shadow-inner shadow-sky-900/30"
             animate={shouldReduceMotion ? { opacity: flipped ? 0 : 1 } : { rotateY: flipped ? 180 : 0, opacity: flipped ? 0 : 1 }}
             transition={{ duration: shouldReduceMotion ? 0.12 : 0.52, ease: 'easeInOut' }}
             style={{ backfaceVisibility: 'hidden' }}
@@ -312,7 +312,7 @@ export default function SectionThree() {
   const activeProcess = processSteps.find((s) => s.id === activeStep) ?? processSteps[0];
 
   return (
-    <section id="section-3" className="relative mt-20 overflow-hidden bg-gradient-to-b from-sire-midnight via-sire-ink to-sire-midnight py-20 text-white">
+    <section id="section-3" className="relative mt-0 py-32 text-white">
       <div className="pointer-events-none absolute inset-0 opacity-60">
         <div className="absolute left-[10%] top-10 h-64 w-64 rounded-full bg-neon-blue/20 blur-[120px]" />
         <div className="absolute right-[6%] top-20 h-72 w-72 rounded-full bg-neon-purple/20 blur-[140px]" />
@@ -322,7 +322,7 @@ export default function SectionThree() {
       <div className="relative mx-auto flex max-w-[1200px] flex-col gap-16 px-4 sm:px-6 lg:px-8">
         {/* Mini Hero */}
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-50 shadow-lg shadow-sky-900/30">
+          <div className="inline-flex items-center gap-3 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-50">
             Section 3 · Why Sire Media
           </div>
           <div className="space-y-4">
@@ -371,7 +371,7 @@ export default function SectionThree() {
             {featureCards.map((card, index) => (
               <m.article
                 key={card.id}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-sky-950/40 backdrop-blur"
+                className="group relative overflow-hidden p-5"
                 initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
                 whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
@@ -396,7 +396,7 @@ export default function SectionThree() {
         </div>
 
         {/* Process Timeline */}
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-sky-950/40 backdrop-blur">
+        <div className="p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.18em] text-sky-200">Process timeline</p>
@@ -573,7 +573,7 @@ export default function SectionThree() {
             {pricing.map((plan, index) => (
               <m.article
                 key={plan.id}
-                className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-sky-950/40 backdrop-blur"
+                className="flex h-full flex-col p-6"
                 initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
